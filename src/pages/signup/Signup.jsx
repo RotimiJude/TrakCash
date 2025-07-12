@@ -1,12 +1,14 @@
 import {useState} from 'react'
+import { useSignup } from '../../hooks/useSignup'
 export default function Signup() {
   const [displayName, setDisplayName] =useState('')
   const [email, setEmail]= useState('')
   const [password, setPassword] = useState('')
+  const {signup, error, isPending} = useSignup()
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(displayName, email, password)
+    signup( email, password, displayName)
   }
   
   return (
@@ -20,7 +22,7 @@ export default function Signup() {
           <form className='flex flex-col my-5 space-y-7' onSubmit={handleSubmit}>
 
           <div className='flex items-center border rounded-lg p-1'>
-             <input
+              <input
               type='text'
               onChange={(e) => setDisplayName(e.target.value)}
               value={displayName}
@@ -56,7 +58,11 @@ export default function Signup() {
                       </svg>
             </div>
 
-            <button className=' text-green-400  border-2 border-green-400 rounded-lg font-bold py-2 px-3 hover:bg-green-600 hover:text-white text-center  cursor-pointer'>Login</button>
+            {!isPending && <button className=' text-green-400  border-2 border-green-400 rounded-lg font-bold py-2 px-3 hover:bg-green-600 hover:text-white text-center  cursor-pointer'>Sign Up</button>}
+
+            {isPending && <button className=' text-green-400  border-2 border-green-400 rounded-lg font-bold py-2 px-3 hover:bg-green-600 hover:text-white text-center  cursor-not-allowed' disabled>Loading</button>}
+
+        {error && <p className='text-red-500'>{error}</p>}
 
           </form>
 

@@ -1,12 +1,14 @@
 import bgImage from '../../assets/5.jpg'
 import { useState } from 'react'
+import { useLogin } from '../../hooks/useLogin'
 
 export default function Login() {
   const [email, setEmail]= useState('')
   const [password, setPassword] = useState('')
+  const {login, error, isPending} = useLogin()
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(email,password)
+    login(email,password)
   }
   return (
     <div className="flex justify-center items-center min-h-fit">
@@ -43,7 +45,11 @@ export default function Login() {
                       </svg>
             </div>
 
-            <button className=' text-green-400  border-2 border-green-400 rounded-lg font-bold py-2 px-3 hover:bg-green-600 hover:text-white text-center  cursor-pointer'>Login</button>
+            {!isPending && <button className=' text-green-400  border-2 border-green-400 rounded-lg font-bold py-2 px-3 hover:bg-green-600 hover:text-white text-center  cursor-pointer'>Login</button>}
+
+            {isPending && <button className=' text-green-400  border-2 border-green-400 rounded-lg font-bold py-2 px-3 hover:bg-green-600 hover:text-white text-center  cursor-not-allowed' disabled>Loading</button> }
+
+            {error && <p className='text-red-500'>{error}</p>}
 
           </form>
 
