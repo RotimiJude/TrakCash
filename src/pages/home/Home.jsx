@@ -8,7 +8,7 @@ export default function Home() {
   const {user} = useAuthContext()
   const { documents, error } = useCollection(
     "transactions",
-    ['uid.uid', '==', user.uid], ['createdAt', 'desc']
+    ['uid', '==', user.uid], ['createdAt', 'desc']
   );
   
   return (

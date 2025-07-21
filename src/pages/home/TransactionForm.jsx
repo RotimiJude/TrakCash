@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useFirestore } from "../../hooks/useFirestore"
 
 //next time ({uid}) not (uid) cause its meant to be a string
-export default function TransactionForm(uid) {
+export default function TransactionForm({uid}) {
     const [name, setName] =useState('')
     const [amount, setAmount] = useState('')
     const {addDocument, response} = useFirestore('transactions')
